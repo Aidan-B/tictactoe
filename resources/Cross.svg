@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+  <line fill="none" id="svg_1" stroke="#fff" stroke-width="5" x1="5" x2="45" y1="5" y2="45"/>
+  <line fill="none" id="svg_2" stroke="#fff" stroke-width="5" x1="45" x2="5" y1="5" y2="45"/>
+ </g>
+</svg>
