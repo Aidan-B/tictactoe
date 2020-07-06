@@ -11,12 +11,12 @@ $(document).ready(() => {
     function updateImage(player, square) {
         switch (player) {
             case false: //player 1 (cross)
-                square.html('<img src="./resources/Cross.svg" class="player-token"></img>');
+                square.html('<img src="./img/Cross.svg" class="player-token"></img>');
                 square.addClass("cross");
                 break;
 
             case true: //player 2 (circle)
-                square.html('<img src="./resources/Circle.svg" class="player-token"></img>');
+                square.html('<img src="./img/Circle.svg" class="player-token"></img>');
                 square.addClass("circle")
                 break;
         
@@ -58,8 +58,7 @@ $(document).ready(() => {
             $token.eq(0).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(8).hasClass(tokenName) ||
             $token.eq(2).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(6).hasClass(tokenName)
             ) {
-
-            console.log(tokenName + " win");
+                
             let message = (!player ? "X wins!" : "O wins!");
             $("#message").html(message);
             return true;
@@ -69,9 +68,10 @@ $(document).ready(() => {
 
 
     //player 0 is cross, player 1 is circle
-    player = true;
-    gameOver = false;
-    
+    let player = true;
+    let gameOver = false;
+    let socket = io();
+
     //User clicks a square
     $(".game-square").click( function() {
         
