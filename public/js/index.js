@@ -27,7 +27,7 @@ $(document).ready(() => {
 
     }
 
-    //Checks for a winner and updates the win status
+    /*//Checks for a winner and updates the win status
     function checkForWin(player) {
 
         console.log("checking for winner");
@@ -53,7 +53,8 @@ $(document).ready(() => {
             console.log("Winner found")
             socket.emit('gameOver', player);
         }   
-    }
+    }*/
+    
     function restart() {
         clearGrid();
         player = "x";
@@ -78,7 +79,7 @@ $(document).ready(() => {
         update(msg.player, $(".game-square[data-row="+msg.row+"][data-col="+msg.col+"]"));
         let message = (player === "x" ? "X's turn" : "O's turn");
         socket.emit('gameMessage', message);
-        checkForWin(msg.player);
+        // checkForWin(msg.player);
     });
 
     socket.on('restart', function(msg) {
@@ -89,12 +90,13 @@ $(document).ready(() => {
     socket.on('gameOver', function(msg) {
         gameOver = true;
         console.log(msg + " wins");
-        let message = (msg === "x" ? "X wins!" : "O wins!");
-        socket.emit('gameMessage', message);
+        // let message = (msg === "x" ? "X wins!" : "O wins!");
+        // socket.emit('gameMessage', message);
         
     });
 
     socket.on('gameMessage', function(msg) {
+        console.log('gameMessage', msg)
         $("#message").html(msg);
     });
 
