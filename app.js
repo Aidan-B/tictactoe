@@ -28,10 +28,9 @@ io.on('connection', (socket) => {
     //TODO: restrict total connections to 2
     socket.join(roomId);
     socket.emit('roomId', { "roomId": roomId } ); //Connect user to room
-    
     let room = io.sockets.adapter.rooms;
-    room[roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
-    room[roomId].player = "x";
+    restartGame(roomId);
+    
     // console.log('user '+socket.id+' connected to ' + roomId);
 
     function checkForWin(grid, player, roomId) {
@@ -57,6 +56,12 @@ io.on('connection', (socket) => {
             return true;
         }  
         return false;
+    }
+    function restartGame(roomId) {
+        room[roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
+        room[roomId].player = "x";
+        io.to(roomId).emit('restart', { "roomId" : roomId });
+        io.to(roomId).emit('gameMessage', "X's turn");
     }
     //For debug purposes
     // function printGrid(grid) {
@@ -92,10 +97,7 @@ io.on('connection', (socket) => {
         // console.log("restart", msg);
 
         if (room[msg.roomId]) {
-            room[msg.roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
-            room[msg.roomId].player = "x";
-            io.to(msg.roomId).emit('restart', msg);
-            io.to(msg.roomId).emit('gameMessage', "X's turn");
+            restartGame(msg.roomId)
         }
     });
 
