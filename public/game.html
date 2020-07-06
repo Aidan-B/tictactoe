@@ -15,80 +15,81 @@
     
     </head>
     <body class="text-center">
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <header class="masthead mb-auto">    
-                <h3>TicTacToe</h3>
-            </header>
+        <div class="scrollbox">
+            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                <header class="masthead mb-auto">    
+                    <h3><a href="/">TicTacToe</a></h3>
+                </header>
 
-            <main role="main" class="inner cover">
-                <h3 id="message" class="cover-heading">X's turn</h3>
-                
-                <div class="game">
-                    <div class="container game-grid my-5" id="gameGrid">
-                        <div class="row">
-                            <div class="bg-secondary col-4 pr-2 pb-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="0" data-col="0" class="embed-responsive-item game-square"></div>
+                <main role="main" class="inner cover pb-5">
+                    <h3 id="message" class="cover-heading">X's turn</h3>
+                    
+                    <div class="game">
+                        <div class="container game-grid my-5" id="gameGrid">
+                            <div class="row">
+                                <div class="bg-secondary col-4 pr-2 pb-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="0" data-col="0" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 px-1 pb-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="0" data-col="1" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 pl-2 pb-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="0" data-col="2" class="embed-responsive-item game-square"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bg-secondary col-4 px-1 pb-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="0" data-col="1" class="embed-responsive-item game-square"></div>
+                            <div class="row">
+                                <div class="bg-secondary col-4 py-1 pr-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="1" data-col="0" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 py-1 px-1 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="1" data-col="1" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 py-1 pl-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="1" data-col="2" class="embed-responsive-item game-square"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bg-secondary col-4 pl-2 pb-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="0" data-col="2" class="embed-responsive-item game-square"></div>
+                            <div class="row">
+                                <div class="bg-secondary col-4 pr-2 pt-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="2" data-col="0" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 px-1 pt-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="2" data-col="1" class="embed-responsive-item game-square"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-secondary col-4 pl-2 pt-2 p-0">
+                                    <div class="embed-responsive embed-responsive-1by1">
+                                        <div data-row="2" data-col="2" class="embed-responsive-item game-square"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="bg-secondary col-4 py-1 pr-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="1" data-col="0" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                            <div class="bg-secondary col-4 py-1 px-1 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="1" data-col="1" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                            <div class="bg-secondary col-4 py-1 pl-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="1" data-col="2" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="bg-secondary col-4 pr-2 pt-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="2" data-col="0" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                            <div class="bg-secondary col-4 px-1 pt-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="2" data-col="1" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                            <div class="bg-secondary col-4 pl-2 pt-2 p-0">
-                                <div class="embed-responsive embed-responsive-1by1">
-                                    <div data-row="2" data-col="2" class="embed-responsive-item game-square"></div>
-                                </div>
-                            </div>
-                        </div>
+                    
+                        <button id="reset-button" class="btn btn-lg btn-secondary">Restart</button>
                     </div>
-                
-                    <button id="reset-button" class="btn btn-lg btn-secondary">Restart</button>
-                </div>
-            </main>
+                </main>
 
-            <footer class="mastfoot mt-auto">
-                <div class="inner">
-                <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="https://Aidan-B.github.io">Aidan Bowers</a>.</p>
-                </div>
-            </footer>
+                <footer class="mastfoot mt-auto">
+                    <div class="inner">
+                    <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="https://Aidan-B.github.io">Aidan Bowers</a>.</p>
+                    </div>
+                </footer>
+            </div>
         </div>
-
         <script type="text/javascript" src="./js/socket.io.slim.js"></script>
         <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>

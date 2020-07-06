@@ -15,32 +15,34 @@
     
     </head>
     <body class="text-center">
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <header class="masthead mb-auto">    
-                <h3>TicTacToe</h3>
-            </header>
+        <div class="scrollbox">
+            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                <header class="masthead mb-auto">    
+                    <h3>TicTacToe</h3>
+                </header>
 
-            <main role="main" class="inner cover">
-                <h3 id="message" class="cover-heading">Welcome!</h3>
-                
-                <div class="start">
-                    <div class="container mt-5" id="joinBox">
-                        <form method="GET" action="/room">
-                            <div class="form-group">
-                                <label for="room">Enter the same code as a friend to play together</label>
-                                <input type="text" class="form-control" id="room" placeholder="Room #" name="id" minlength="4"/>
-                            </div>
-                            <button type="submit" class="btn btn-secondary">Create/Join Room</button>
-                        </form>
+                <main role="main" class="inner cover pb-3">
+                    <h3 id="message" class="cover-heading">Welcome!</h3>
+                    
+                    <div class="start">
+                        <div class="container mt-5" id="joinBox">
+                            <form method="GET" action="/room">
+                                <div class="form-group">
+                                    <label for="room">Enter the same code as a friend to play together</label>
+                                    <input type="text" class="form-control" id="room" placeholder="Room #" name="id" minlength="4"/>
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Create/Join Room</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
 
-            <footer class="mastfoot mt-auto">
-                <div class="inner">
-                <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="https://Aidan-B.github.io">Aidan Bowers</a>.</p>
-                </div>
-            </footer>
+                <footer class="mastfoot mt-auto">
+                    <div class="inner">
+                    <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="https://Aidan-B.github.io">Aidan Bowers</a>.</p>
+                    </div>
+                </footer>
+            </div>
         </div>
     </body>
 </html>
