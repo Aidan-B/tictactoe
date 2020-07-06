@@ -4,6 +4,10 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
 let roomId;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 
 //only send public directory to clients
 app.use(express.static(__dirname + '/public'))
@@ -16,18 +20,19 @@ app.get('/room', (req, res) => {
     roomId = req.query.id;
 });
 
-http.listen(3000, () => {
+http.listen(port, () => {
     console.log('listening on *:3000');
 });
 
 io.on('connection', (socket) => {
+    //TODO: restrict total connections to 2
     socket.join(roomId);
     socket.emit('roomId', { "roomId": roomId } ); //Connect user to room
     
     let room = io.sockets.adapter.rooms;
     room[roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
     room[roomId].player = "x";
-    console.log('user '+socket.id+' connected to ' + roomId);
+    // console.log('user '+socket.id+' connected to ' + roomId);
 
     function checkForWin(grid, player, roomId) {
         
@@ -47,7 +52,7 @@ io.on('connection', (socket) => {
             (grid[2][0] == player && grid[1][1] == player && grid[0][2] == player)
             ) {
             
-            console.log("Winner", player);
+            // console.log("Winner", player);
             // printGrid(grid);
             return true;
         }  
@@ -62,7 +67,7 @@ io.on('connection', (socket) => {
 
     //Update game board
     socket.on('update', (msg) => {
-        console.log("update", msg);
+        // console.log("update", msg);
         room[msg.roomId].grid[msg.row][msg.col] = room[msg.roomId].player;
         out = {
             "player": room[msg.roomId].player,
@@ -84,7 +89,7 @@ io.on('connection', (socket) => {
 
     //reset game to clear board
     socket.on('restart', (msg) => {
-        console.log("restart", msg);
+        // console.log("restart", msg);
 
         if (room[msg.roomId]) {
             room[msg.roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
@@ -95,6 +100,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        // console.log('user disconnected');
     });
 });

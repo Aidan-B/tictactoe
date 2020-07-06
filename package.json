@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Aidan-B/tictactoe/issues"
   },
-  "homepage": "https://github.com/Aidan-B/tictactoe#readme"
+  "homepage": "https://github.com/Aidan-B/tictactoe#readme",
+  "engines": {
+    "node": "14.5.0"
+  }
 }

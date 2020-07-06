@@ -41,32 +41,34 @@ $(document).ready(() => {
     });
 
     socket.on('roomId', (msg) => {
-        console.log('roomId', msg);
+        // console.log('roomId', msg);
         roomId = msg.roomId
     });
 
     socket.on('update', function(msg) {
-        console.log('update:', msg);
+        // console.log('update:', msg);
         update(msg.player, $(".game-square[data-row="+msg.row+"][data-col="+msg.col+"]"));
     });
 
     socket.on('restart', function(msg) {
-        console.log("restart:", msg);
+        // console.log("restart:", msg);
         restart();
     });
 
     socket.on('gameOver', function(msg) {
-        console.log('gameOver:', msg);
+        // console.log('gameOver:', msg);
         gameOver = true;        
     });
 
     socket.on('gameMessage', function(msg) {
-        console.log('gameMessage:', msg)
+        // console.log('gameMessage:', msg)
         $("#message").html(msg);
     });
 
     //User clicks a square
-    $(".game-square").click( function() {        
+    $(".game-square").click( function() {  
+        
+        //TODO: restrict to each client to x or o
         if (!gameOver && $(this).is(".game-square:empty")) {
             //send the coordinates of the grid square to server
             let data = {
