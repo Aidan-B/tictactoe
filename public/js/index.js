@@ -33,10 +33,16 @@ $(document).ready(() => {
     }
     let gameOver = false;
     let socket = io();
-
+    let roomId = null;
+    
     //reload both games on reload of page
     $(window).bind('beforeunload',function(){
-        socket.emit('restart', true);
+        socket.emit('restart', { "roomId" : roomId } );
+    });
+
+    socket.on('roomId', (msg) => {
+        console.log('roomId', msg);
+        roomId = msg.roomId
     });
 
     socket.on('update', function(msg) {
@@ -45,7 +51,7 @@ $(document).ready(() => {
     });
 
     socket.on('restart', function(msg) {
-        console.log("restart:");
+        console.log("restart:", msg);
         restart();
     });
 
@@ -64,6 +70,7 @@ $(document).ready(() => {
         if (!gameOver && $(this).is(".game-square:empty")) {
             //send the coordinates of the grid square to server
             let data = {
+                "roomId": roomId,
                 "row": $(this).data("row"),
                 "col": $(this).data("col")
             };
@@ -73,7 +80,7 @@ $(document).ready(() => {
 
     //User clicks reset
     $("#reset-button").click(function() {
-        socket.emit('restart', true);
+        socket.emit('restart', { "roomId": roomId });
     });
     
 });
