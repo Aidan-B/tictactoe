@@ -26,44 +26,11 @@ $(document).ready(() => {
         $(".game-square").removeClass("cross");
 
     }
-
-    /*//Checks for a winner and updates the win status
-    function checkForWin(player) {
-
-        console.log("checking for winner");
-        let $token = $("#gameGrid").children(".row").find(".game-square");
-        
-        let tokenName = (player === "o" ? 'circle' : 'cross');
-
-        //TODO: Maybe if I want to make the board scaleable I can apply some math here,
-        //      I figure this is appropriate for this situation.
-
-                //Win for row, (0,1,2),(3,4,5),(6,7,8)
-        if ($token.eq(0).hasClass(tokenName) && $token.eq(1).hasClass(tokenName) && $token.eq(2).hasClass(tokenName) ||
-            $token.eq(3).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(5).hasClass(tokenName) ||
-            $token.eq(6).hasClass(tokenName) && $token.eq(7).hasClass(tokenName) && $token.eq(8).hasClass(tokenName)
-            ||  //Win for column (0,3,6),(1,4,7),(2,5,8)
-            $token.eq(0).hasClass(tokenName) && $token.eq(3).hasClass(tokenName) && $token.eq(6).hasClass(tokenName) ||
-            $token.eq(1).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(7).hasClass(tokenName) ||
-            $token.eq(2).hasClass(tokenName) && $token.eq(5).hasClass(tokenName) && $token.eq(8).hasClass(tokenName)                
-            ||  //Win for diagonals (0,4,8),(2,4,6)
-            $token.eq(0).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(8).hasClass(tokenName) ||
-            $token.eq(2).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(6).hasClass(tokenName)
-            ) {
-            console.log("Winner found")
-            socket.emit('gameOver', player);
-        }   
-    }*/
     
     function restart() {
         clearGrid();
-        player = "x";
         gameOver = false;
-        socket.emit('gameMessage', "Welcome!");
-        
     }
-
-    let player = "x";
     let gameOver = false;
     let socket = io();
 
@@ -72,40 +39,34 @@ $(document).ready(() => {
         socket.emit('restart', true);
     });
 
-    //TODO: game events should call socket that then broadcasts the update to each client. Client then
     socket.on('update', function(msg) {
-        console.log(msg);
-        player = (msg.player === "x" ? "o" : "x");
+        console.log('update:', msg);
         update(msg.player, $(".game-square[data-row="+msg.row+"][data-col="+msg.col+"]"));
-        let message = (player === "x" ? "X's turn" : "O's turn");
-        socket.emit('gameMessage', message);
-        // checkForWin(msg.player);
     });
 
     socket.on('restart', function(msg) {
-        console.log("received restart message");
+        console.log("restart:");
         restart();
     });
 
     socket.on('gameOver', function(msg) {
-        gameOver = true;
-        console.log(msg + " wins");
-        // let message = (msg === "x" ? "X wins!" : "O wins!");
-        // socket.emit('gameMessage', message);
-        
+        console.log('gameOver:', msg);
+        gameOver = true;        
     });
 
     socket.on('gameMessage', function(msg) {
-        console.log('gameMessage', msg)
+        console.log('gameMessage:', msg)
         $("#message").html(msg);
     });
 
     //User clicks a square
     $(".game-square").click( function() {        
-
         if (!gameOver && $(this).is(".game-square:empty")) {
-            
-            let data = { "player": player, "row": $(this).data("row"), "col": $(this).data("col") };
+            //send the coordinates of the grid square to server
+            let data = {
+                "row": $(this).data("row"),
+                "col": $(this).data("col")
+            };
             socket.emit('update', data);            
         }
 
