@@ -60,6 +60,8 @@ $(document).ready(() => {
             ) {
 
             console.log(tokenName + " win");
+            let message = (!player ? "X wins!" : "O wins!");
+            $("#message").html(message);
             return true;
         }
         return false;   
@@ -67,23 +69,29 @@ $(document).ready(() => {
 
 
     //player 0 is cross, player 1 is circle
-    player = false;
+    player = true;
     gameOver = false;
     
     //User clicks a square
     $(".game-square").click( function() {
+        
         if (!gameOver) {
-            selectSquare($(this));
-            gameOver = checkForWin(player);
             player = !player;
-        }        
+            selectSquare($(this));
+
+            let message = (player ? "X's turn" : "O's turn");
+            $("#message").html(message);
+            
+            gameOver = checkForWin(player);
+        }
     });
 
     //User clicks reset
     $("#reset-button").click(function() {
         clearGrid();
-        player = false;
+        player = true;
         gameOver = false;
+        $("#message").html("Welcome!");
     });
     
 });
