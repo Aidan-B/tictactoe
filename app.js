@@ -26,6 +26,7 @@ http.listen(port, () => {
 
 io.on('connection', (socket) => {
     //TODO: restrict total connections to 2
+    //TODO: notify users when someone joins
     socket.join(roomId);
     socket.emit('roomId', { "roomId": roomId } ); //Connect user to room
     let room = io.sockets.adapter.rooms;
