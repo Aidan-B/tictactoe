@@ -1,21 +1,14 @@
 $(document).ready(() => {
 
-    //handles player selection
-    function selectSquare(element) {
-        if (element.is(":empty")) {
-            updateImage(player, element);
-        }
-    }
-
     //Sets the grid image to player token
-    function updateImage(player, square) {
+    function update(player, square) {
         switch (player) {
-            case false: //player 1 (cross)
+            case "x": //player 1 (cross)
                 square.html('<img src="./img/Cross.svg" class="player-token"></img>');
                 square.addClass("cross");
                 break;
 
-            case true: //player 2 (circle)
+            case "o": //player 2 (circle)
                 square.html('<img src="./img/Circle.svg" class="player-token"></img>');
                 square.addClass("circle")
                 break;
@@ -37,11 +30,10 @@ $(document).ready(() => {
     //Checks for a winner and updates the win status
     function checkForWin(player) {
 
-        //might be a good idea to store this in an array on the server side so that people cant
-        //just go into the inspector to win... although that sounds like a fun cheat code :)
+        console.log("checking for winner");
         let $token = $("#gameGrid").children(".row").find(".game-square");
         
-        let tokenName = (player ? 'circle' : 'cross');
+        let tokenName = (player === "o" ? 'circle' : 'cross');
 
         //TODO: Maybe if I want to make the board scaleable I can apply some math here,
         //      I figure this is appropriate for this situation.
@@ -58,40 +50,68 @@ $(document).ready(() => {
             $token.eq(0).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(8).hasClass(tokenName) ||
             $token.eq(2).hasClass(tokenName) && $token.eq(4).hasClass(tokenName) && $token.eq(6).hasClass(tokenName)
             ) {
-                
-            let message = (!player ? "X wins!" : "O wins!");
-            $("#message").html(message);
-            return true;
-        }
-        return false;   
+            console.log("Winner found")
+            socket.emit('gameOver', player);
+        }   
+    }
+    function restart() {
+        clearGrid();
+        player = "x";
+        gameOver = false;
+        socket.emit('gameMessage', "Welcome!");
+        
     }
 
-
-    //player 0 is cross, player 1 is circle
-    let player = true;
+    let player = "x";
     let gameOver = false;
     let socket = io();
 
-    //User clicks a square
-    $(".game-square").click( function() {
-        
-        if (!gameOver) {
-            player = !player;
-            selectSquare($(this));
+    //reload both games on reload of page
+    $(window).bind('beforeunload',function(){
+        socket.emit('restart', true);
+    });
 
-            let message = (player ? "X's turn" : "O's turn");
-            $("#message").html(message);
+    //TODO: game events should call socket that then broadcasts the update to each client. Client then
+    socket.on('update', function(msg) {
+        console.log(msg);
+        player = (msg.player === "x" ? "o" : "x");
+        update(msg.player, $(".game-square[data-row="+msg.row+"][data-col="+msg.col+"]"));
+        let message = (player === "x" ? "X's turn" : "O's turn");
+        socket.emit('gameMessage', message);
+        checkForWin(msg.player);
+    });
+
+    socket.on('restart', function(msg) {
+        console.log("received restart message");
+        restart();
+    });
+
+    socket.on('gameOver', function(msg) {
+        gameOver = true;
+        console.log(msg + " wins");
+        let message = (msg === "x" ? "X wins!" : "O wins!");
+        socket.emit('gameMessage', message);
+        
+    });
+
+    socket.on('gameMessage', function(msg) {
+        $("#message").html(msg);
+    });
+
+    //User clicks a square
+    $(".game-square").click( function() {        
+
+        if (!gameOver && $(this).is(".game-square:empty")) {
             
-            gameOver = checkForWin(player);
+            let data = { "player": player, "row": $(this).data("row"), "col": $(this).data("col") };
+            socket.emit('update', data);            
         }
+
     });
 
     //User clicks reset
     $("#reset-button").click(function() {
-        clearGrid();
-        player = true;
-        gameOver = false;
-        $("#message").html("Welcome!");
+        socket.emit('restart', true);
     });
     
 });
