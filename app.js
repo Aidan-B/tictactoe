@@ -22,6 +22,11 @@ http.listen(3000, () => {
 
 io.on('connection', (socket) => {
     socket.join(roomId);
+    let room = io.sockets.adapter.rooms[roomId];
+    room.grid = [[0,0,0],[0,0,0],[0,0,0]];
+    room.player = "x";
+    console.log('user '+socket.id+' connected to ' + roomId);
+
     function checkForWin(grid, player) {
         console.log("checking for winner");
         
@@ -48,43 +53,35 @@ io.on('connection', (socket) => {
             io.to(roomId).emit('gameMessage', (player === "x" ? "X wins!" : "O wins!"));
         }  
     }
-
     function printGrid(grid) {
         console.log(grid[0]);
         console.log(grid[1]);
         console.log(grid[2]);
     }
-    
-    
-    let grid = [[0,0,0],[0,0,0],[0,0,0]];
-    let player = "x";
 
-    console.log('a user connected');
-
-    //update board on
     socket.on('update', (msg) => {
         console.log("update");
-        grid[msg.row][msg.col] = player;
+        room.grid[msg.row][msg.col] = room.player;
         msg = {
-            "player": player,
+            "player": room.player,
             "col": msg.col,
             "row": msg.row
         }
         io.to(roomId).emit('update', msg);
         
-        checkForWin(grid, player);
-        printGrid(grid);
+        checkForWin(room.grid, room.player);
+        printGrid(room.grid);
 
         //toggle player each turn
-        player = (player === "x" ? "o" : "x")
+        room.player = (room.player === "x" ? "o" : "x")
     });
 
     //reset game to clear board
     socket.on('restart', (msg) => {
         console.log("restart");
 
-        grid = [[0,0,0],[0,0,0],[0,0,0]];
-        player = "x";
+        room.grid = [[0,0,0],[0,0,0],[0,0,0]];
+        room.player = "x";
         
         io.to(roomId).emit('restart', msg);
         io.to(roomId).emit('gameMessage', "Welcome!");
