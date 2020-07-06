@@ -3,20 +3,25 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+let roomId;
 
 //only send public directory to clients
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/welcome.html');
+});
+app.get('/room', (req, res) => {
+    res.sendFile(__dirname + '/public/game.html');
+    roomId = req.query.id;
 });
 
 http.listen(3000, () => {
-  console.log('listening on *:3000');
+    console.log('listening on *:3000');
 });
 
 io.on('connection', (socket) => {
-
+    socket.join(roomId);
     function checkForWin(grid, player) {
         console.log("checking for winner");
         
@@ -39,8 +44,8 @@ io.on('connection', (socket) => {
             
             printGrid(grid);
             
-            io.emit('gameOver', player);
-            io.emit('gameMessage', (player === "x" ? "X wins!" : "O wins!"));
+            io.to(roomId).emit('gameOver', player);
+            io.to(roomId).emit('gameMessage', (player === "x" ? "X wins!" : "O wins!"));
         }  
     }
 
@@ -65,11 +70,11 @@ io.on('connection', (socket) => {
             "col": msg.col,
             "row": msg.row
         }
-        io.emit('update', msg);
+        io.to(roomId).emit('update', msg);
         
         checkForWin(grid, player);
         printGrid(grid);
-        
+
         //toggle player each turn
         player = (player === "x" ? "o" : "x")
     });
@@ -81,8 +86,8 @@ io.on('connection', (socket) => {
         grid = [[0,0,0],[0,0,0],[0,0,0]];
         player = "x";
         
-        io.emit('restart', msg);
-        io.emit('gameMessage', "Welcome!");
+        io.to(roomId).emit('restart', msg);
+        io.to(roomId).emit('gameMessage', "Welcome!");
     });
 
     socket.on('disconnect', () => {

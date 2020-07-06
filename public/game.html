@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Aidan Bowers">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <title>TicTacToe</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <link href="./css/style.css" rel="stylesheet">
+    
+    </head>
+    <body class="text-center">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">    
+                <h3>TicTacToe</h3>
+            </header>
+
+            <main role="main" class="inner cover">
+                <h3 id="message" class="cover-heading">Welcome!</h3>
+                
+                <div class="game">
+                    <div class="container game-grid my-5" id="gameGrid">
+                        <div class="row">
+                            <div class="bg-secondary col-4 pr-2 pb-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="0" data-col="0" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 px-1 pb-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="0" data-col="1" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 pl-2 pb-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="0" data-col="2" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="bg-secondary col-4 py-1 pr-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="1" data-col="0" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 py-1 px-1 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="1" data-col="1" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 py-1 pl-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="1" data-col="2" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="bg-secondary col-4 pr-2 pt-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="2" data-col="0" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 px-1 pt-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="2" data-col="1" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                            <div class="bg-secondary col-4 pl-2 pt-2 p-0">
+                                <div class="embed-responsive embed-responsive-1by1">
+                                    <div data-row="2" data-col="2" class="embed-responsive-item game-square"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <a id="reset-button" href="#" class="btn btn-lg btn-secondary">Restart</a>
+                </div>
+            </main>
+
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="https://Aidan-B.github.io">Aidan Bowers</a>.</p>
+                </div>
+            </footer>
+        </div>
+
+        <script type="text/javascript" src="./js/socket.io.slim.js"></script>
+        <script type="text/javascript" src="./js/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="./js/index.js"></script>
+    </body>
+</html>

@@ -69,7 +69,6 @@ $(document).ready(() => {
             };
             socket.emit('update', data);            
         }
-
     });
 
     //User clicks reset
