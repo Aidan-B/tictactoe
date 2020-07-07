@@ -21,7 +21,7 @@ app.get('/room', (req, res) => {
 });
 
 http.listen(port, () => {
-    console.log('listening on *:3000');
+    console.log('listening on *:' + port);
 });
 
 io.on('connection', (socket) => {
@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
     let room = io.sockets.adapter.rooms;
     restartGame(roomId);
     
-    // console.log('user '+socket.id+' connected to ' + roomId);
+    console.log('user '+socket.id+' connected to ' + roomId);
 
     function checkForWin(grid, player, roomId) {
         
