@@ -58,6 +58,16 @@ io.on('connection', (socket) => {
         }  
         return false;
     }
+    //returns false if there is a zero in any grid square
+    function gridFull(grid) {
+        for (x = 0; x < 3; x++) {
+            for (y = 0; y < 3; y++) {
+                if (grid[x][y] == 0)
+                    return false; 
+            }   
+        }
+        return true
+    }
     function restartGame(roomId) {
         room[roomId].grid = [[0,0,0],[0,0,0],[0,0,0]];
         room[roomId].player = "x";
@@ -86,7 +96,10 @@ io.on('connection', (socket) => {
             io.to(msg.roomId).emit('gameOver', out.player);
             io.to(msg.roomId).emit('gameMessage', (out.player === "x" ? "X wins!" : "O wins!"));
         } else {
-            io.to(msg.roomId).emit('gameMessage', (out.player === "x" ? "O's turn" : "X's turn"));
+            if (gridFull(room[msg.roomId].grid))
+                io.to(msg.roomId).emit('gameMessage', "Draw!");
+            else
+                io.to(msg.roomId).emit('gameMessage', (out.player === "x" ? "O's turn" : "X's turn"));
         }
 
         //toggle player each turn
@@ -103,6 +116,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        // console.log('user disconnected');
+        console.log('user '+socket.id+' disconnected');
     });
 });
